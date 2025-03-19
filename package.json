@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon -r dotenv/config src/server.ts",
-    "build": "npm rebuild --update-binary && tsc",
+    "build": "tsc --build --force",
     "start": "node ./dist/server.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "predeploy": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
