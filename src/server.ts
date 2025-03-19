@@ -27,11 +27,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/videos', videosRoutes);
 
 const URI = env.MONGO_DB_URI
-mongoose.connect(URI)
+mongoose.connect(env.MONGO_DB_URI)
   .then(() => {
     console.log("Connect to the MongoDB");
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on port ${env.PORT}`);
     });
   })
   .catch((err) => {

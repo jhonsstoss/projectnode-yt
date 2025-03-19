@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { hash, compare } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import { env } from '../../../env';
 
 class UserRepository {
   async create(request: Request, response: Response) {
@@ -49,7 +50,7 @@ class UserRepository {
       // Gera o token
       const token = sign(
         { id: user._id, email: user.email },
-        process.env.SECRET as string,
+        env.SECRET as string,
         { expiresIn: '1d' }
       );
   
