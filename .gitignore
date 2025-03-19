@@ -1,0 +1,24 @@
+# Environment
+.env
+*.env.local
+
+# Dependências
+node_modules/
+dist/
+
+# Logs e databases
+*.log
+*.sqlite
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo
+
+# Arquivos de configuração sensíveis
+config/*.json

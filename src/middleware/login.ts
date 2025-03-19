@@ -1,18 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
+import { env } from '../env';
 
 export const login = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1]; // Extrai o token do header
     console.log("Token recebido:", token);
-    console.log("Chave SECRET:", process.env.SECRET);
+    console.log("Chave SECRET:", env.SECRET);
 
     if (!token) {
       return res.status(401).json({ message: 'Token não fornecido' });
     }
 
     // Verifica o token usando a chave secreta do .env
-    const decoded = verify(token, process.env.SECRET as string) as { exp: number };
+    const decoded = verify(token, env.SECRET as string) as { exp: number };
     const isExpired = decoded.exp * 1000 < Date.now();
       if (isExpired) {
         return res.status(401).json({ message: 'Token expirado' });

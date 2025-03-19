@@ -64,7 +64,7 @@ class UserRepository {
   async getUser(request: Request, response: Response) {
     try {
       const token = request.headers.authorization?.split(' ')[1] || '';
-      const decoded: any = verify(token, process.env.SECRET as string);
+      const decoded: any = verify(token, env.SECRET as string);
       
       const user = await User.findById(decoded.id)
         .select('-password -__v');

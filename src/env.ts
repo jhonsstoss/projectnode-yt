@@ -1,19 +1,29 @@
-import dotenv from 'dotenv';
-dotenv.config(); // Carrega as variáveis
+// src/env.ts
+import { z } from 'zod';
+import { config } from 'dotenv';
 
-import z from 'zod';
+// 1. Carregar variáveis primeiro
+config();
 
+// 2. Schema de validação otimizado
 const envSchema = z.object({
-  SECRET: z.string(),
-  PORT: z.coerce.number().default(3333),
-  MONGO_DB_URI: z.string().url(), // Apenas a URI é necessária
+  SECRET: z.string().min(32, "Chave secreta deve ter pelo menos 32 caracteres"),
+  PORT: z.coerce.number().int().positive().default(3333),
+  MONGO_DB_URI: z.string().url("URI do MongoDB inválida")
+    .regex(/mongodb(\+srv)?:\/\//, "Deve ser uma URI MongoDB válida")
 });
 
-const parsedEnv = envSchema.safeParse(process.env);
+// 3. Validação estrita
+const envResult = envSchema.safeParse(process.env);
 
-if (!parsedEnv.success) {
-  console.error("Erro ao validar variáveis de ambiente:", parsedEnv.error.format());
+// 4. Tratamento de erros detalhado
+if (!envResult.success) {
+  console.error("❌ Erro nas variáveis de ambiente:");
+  envResult.error.errors.forEach((err) => {
+    console.error(`- ${err.path.join('.')}: ${err.message}`);
+  });
   process.exit(1);
 }
 
-export const env = parsedEnv.data;
+// 5. Exporte o ambiente validado
+export const env = envResult.data;

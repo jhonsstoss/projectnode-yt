@@ -6,7 +6,7 @@ import { userRoutes } from './routes/user.routes';
 import { videosRoutes } from './routes/videos.routes';
 import mongoose from 'mongoose';
 
-console.log(process.env);
+console.log(env);
 
 config();
 const app = express();
