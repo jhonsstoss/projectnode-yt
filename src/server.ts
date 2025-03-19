@@ -11,8 +11,9 @@ console.log(process.env);
 config();
 const app = express();
 
+
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
+  origin: '*', // Frontend URL
   credentials: true, // Permite cookies/tokens
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
   allowedHeaders: ['Content-Type', 'Authorization'] // Headers permitidos
@@ -21,16 +22,9 @@ app.use(cors({
 app.options('*', cors()); // Habilita preflight para todas as rotas
 const PORT = env.PORT || 3333;
 
-// app.use(function(req, res, next){
-//   res.header("Access-Control-Allow-Origin", "http://localhost:5173"); // Especifique a origem
-//   res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
-//   res.header("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, OPTIONS");
-//   next();
-// });
-
 app.use(express.json());
-app.use('/user', userRoutes);
-app.use('/videos', videosRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/videos', videosRoutes);
 
 const URI = env.MONGO_DB_URI
 mongoose.connect(URI)

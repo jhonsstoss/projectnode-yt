@@ -7,7 +7,8 @@ import { UserRepository } from "../modules/user/repositories/UserRepository";
 const userRoutes = Router();
 const userRepository = new UserRepository();
 
-userRoutes.post('/sign-up', (request, response) => {
+userRoutes.post('/signup', (request, response) => {
+  console.log("Requisição recebida em /signup:", request.body);
   userRepository.create(request, response)
 })
 
